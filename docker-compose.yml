@@ -22,15 +22,21 @@ services:
     web:
         build: .
         volumes:
-            - .:/src
+            - .:/rails
         ports:
-            - "80:8000"
+            - "3000:3000"
+        stdin_open: true # for dev, remove when ready for deployment,
+        tty: true # allows interactive sessions
         depends_on:
             db:
                 condition: service_healthy
         environment:
             DATABASE_URL: postgres://development:development@db:5432/development
             RAILS_ENV: development
+            POSTGRES_HOST: db
+            POSTGRES_USER: development
+            POSTGRES_PASSWORD: development
+            POSTGRES_PORT: 5432
 
 volumes:
     pgdata:
