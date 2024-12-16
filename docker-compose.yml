@@ -1,0 +1,36 @@
+services:
+    db:
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: development
+            POSTGRES_USER: development
+            POSTGRES_DB: development
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U development"]
+            interval: 1s
+            timeout: 5s
+            retries: 10
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
+
+    web:
+        build: .
+        volumes:
+            - .:/src
+        ports:
+            - "80:8000"
+        depends_on:
+            db:
+                condition: service_healthy
+        environment:
+            DATABASE_URL: postgres://development:development@db:5432/development
+            RAILS_ENV: development
+
+volumes:
+    pgdata:
