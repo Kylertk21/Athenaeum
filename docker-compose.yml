@@ -9,7 +9,7 @@ services:
         volumes:
             - pgdata:/var/lib/postgresql/data
         healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U development"]
+            test: ["CMD-SHELL", "pg_isready -U src -d src_development"]
             interval: 1s
             timeout: 5s
             retries: 10
