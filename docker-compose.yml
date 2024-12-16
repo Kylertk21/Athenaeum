@@ -4,8 +4,8 @@ services:
         restart: always
         environment:
             POSTGRES_PASSWORD: development
-            POSTGRES_USER: development
-            POSTGRES_DB: development
+            POSTGRES_USER: src
+            POSTGRES_DB: src_development
         volumes:
             - pgdata:/var/lib/postgresql/data
         healthcheck:
@@ -13,28 +13,29 @@ services:
             interval: 1s
             timeout: 5s
             retries: 10
+        ports:
+            - "5432:5432"
     adminer:
         image: adminer
         restart: always
         ports:
-            - 8080:8080
-
+            - "8080:8080"
     web:
         build: .
         volumes:
-            - .:/rails
+            - .:/src
         ports:
             - "3000:3000"
         stdin_open: true # for dev, remove when ready for deployment,
-        tty: true # allows interactive sessions
+        tty: true        # allows interactive sessions
         depends_on:
             db:
                 condition: service_healthy
         environment:
-            DATABASE_URL: postgres://development:development@db:5432/development
+            DATABASE_URL: postgres://src:development@db:5432/src_development
             RAILS_ENV: development
             POSTGRES_HOST: db
-            POSTGRES_USER: development
+            POSTGRES_USER: src
             POSTGRES_PASSWORD: development
             POSTGRES_PORT: 5432
 
