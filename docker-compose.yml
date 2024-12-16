@@ -23,7 +23,7 @@ services:
     web:
         build: .
         volumes:
-            - .:/src
+            - /home/kyler/programming/Webapps/Athenaeum/src:/src
         ports:
             - "3000:3000"
         stdin_open: true # for dev, remove when ready for deployment,

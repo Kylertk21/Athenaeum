@@ -2,7 +2,7 @@ FROM ruby:3.2
 
 EXPOSE 3000
 
-WORKDIR /rails
+WORKDIR /src
 
 RUN apt-get update && apt-get install -y nodejs \
     build-essential libpq-dev
@@ -15,7 +15,7 @@ COPY Gemfile ./
 
 RUN bundle install
 
-COPY src /rails
+COPY src /src
 
 CMD ["bash"]
 
