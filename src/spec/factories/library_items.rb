@@ -1,12 +1,10 @@
 FactoryBot.define do
-  factory :forum_post do
+  factory :library_item do
     title { "MyString" }
     description { "MyText" }
-    topic { "MyString" }
   end
-  trait :empty_forum_post do
+  trait :empty_library_item do 
     title { "" }
     description { "" }
-    topic { "" }
   end
 end
