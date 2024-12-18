@@ -198,3 +198,435 @@ FOREIGN KEY ("forum_post_id")
   [1m[36mTRANSACTION (5.1ms)[0m  [1m[35mCOMMIT /*application='Src'*/[0m
   [1m[35m (0.9ms)[0m  [1m[34mSELECT pg_advisory_unlock(5424499965285445485) /*application='Src'*/[0m
   [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='Src'*/[0m
+  [1m[35m (22.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "src_test" /*application='Src'*/[0m
+  [1m[35m (114.8ms)[0m  [1m[35mCREATE DATABASE "src_test" ENCODING = 'unicode' /*application='Src'*/[0m
+  [1m[35mSQL (34.8ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE /*application='Src'*/[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "forum_post_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE INDEX "index_comments_on_forum_post_id" ON "comments" ("forum_post_id") /*application='Src'*/[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "forum_posts" CASCADE /*application='Src'*/[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE "forum_posts" ("id" bigserial primary key, "title" character varying, "description" text, "topic" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE INDEX "index_forum_posts_on_user_id" ON "forum_posts" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "library_items" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.5ms)[0m  [1m[35mCREATE TABLE "library_items" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_library_items_on_user_id" ON "library_items" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='Src'*/[0m
+  [1m[35m (7.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying, "password" character varying, "role" character varying, "username" character varying, "first_name" character varying, "last_name" character varying, "bio" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (5.8ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_da45a34768"
+FOREIGN KEY ("forum_post_id")
+  REFERENCES "forum_posts" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.8ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (5.1ms)[0m  [1m[35mALTER TABLE "forum_posts" ADD CONSTRAINT "fk_rails_c76798dc77"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (5.6ms)[0m  [1m[35mALTER TABLE "library_items" ADD CONSTRAINT "fk_rails_218f14633a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[35m (4.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241216223021) /*application='Src'*/[0m
+  [1m[35m (4.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241216222659),
+(20241216222618),
+(20241216222409); /*application='Src'*/[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (4.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-12-17 11:31:19.520632', '2024-12-17 11:31:19.520640') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Update (3.8ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2024-12-17 11:31:19.535585' WHERE "ar_internal_metadata"."key" = 'environment' /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'c71ae0b950b6217c9c0e2da21f8ed59f9cfb30e2', '2024-12-17 11:31:19.544452', '2024-12-17 11:31:19.544457') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='Src'*/[0m
+  [1m[35m (71.7ms)[0m  [1m[35mDROP DATABASE IF EXISTS "src_test" /*application='Src'*/[0m
+  [1m[35m (84.9ms)[0m  [1m[35mCREATE DATABASE "src_test" ENCODING = 'unicode' /*application='Src'*/[0m
+  [1m[35mSQL (44.9ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Src'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE /*application='Src'*/[0m
+  [1m[35m (9.1ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "forum_post_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE INDEX "index_comments_on_forum_post_id" ON "comments" ("forum_post_id") /*application='Src'*/[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "forum_posts" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE TABLE "forum_posts" ("id" bigserial primary key, "title" character varying, "description" text, "topic" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE INDEX "index_forum_posts_on_user_id" ON "forum_posts" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "library_items" CASCADE /*application='Src'*/[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "library_items" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_library_items_on_user_id" ON "library_items" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='Src'*/[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying, "password" character varying, "role" character varying, "username" character varying, "first_name" character varying, "last_name" character varying, "bio" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.2ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_da45a34768"
+FOREIGN KEY ("forum_post_id")
+  REFERENCES "forum_posts" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.7ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.4ms)[0m  [1m[35mALTER TABLE "forum_posts" ADD CONSTRAINT "fk_rails_c76798dc77"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.6ms)[0m  [1m[35mALTER TABLE "library_items" ADD CONSTRAINT "fk_rails_218f14633a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (5.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241216223021) /*application='Src'*/[0m
+  [1m[35m (3.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241216222659),
+(20241216222618),
+(20241216222409); /*application='Src'*/[0m
+  [1m[35m (7.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (4.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-12-17 11:34:43.704289', '2024-12-17 11:34:43.704297') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Update (3.8ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2024-12-17 11:34:43.716713' WHERE "ar_internal_metadata"."key" = 'environment' /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'c71ae0b950b6217c9c0e2da21f8ed59f9cfb30e2', '2024-12-17 11:34:43.727929', '2024-12-17 11:34:43.727936') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='Src'*/[0m
+  [1m[35m (86.9ms)[0m  [1m[35mDROP DATABASE IF EXISTS "src_test" /*application='Src'*/[0m
+  [1m[35m (96.6ms)[0m  [1m[35mCREATE DATABASE "src_test" ENCODING = 'unicode' /*application='Src'*/[0m
+  [1m[35mSQL (38.7ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE /*application='Src'*/[0m
+  [1m[35m (9.9ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "forum_post_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE INDEX "index_comments_on_forum_post_id" ON "comments" ("forum_post_id") /*application='Src'*/[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "forum_posts" CASCADE /*application='Src'*/[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "forum_posts" ("id" bigserial primary key, "title" character varying, "description" text, "topic" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE INDEX "index_forum_posts_on_user_id" ON "forum_posts" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "library_items" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE TABLE "library_items" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE INDEX "index_library_items_on_user_id" ON "library_items" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.2ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying, "password" character varying, "role" character varying, "username" character varying, "first_name" character varying, "last_name" character varying, "bio" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (6.0ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_da45a34768"
+FOREIGN KEY ("forum_post_id")
+  REFERENCES "forum_posts" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.2ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.2ms)[0m  [1m[35mALTER TABLE "forum_posts" ADD CONSTRAINT "fk_rails_c76798dc77"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.5ms)[0m  [1m[35mALTER TABLE "library_items" ADD CONSTRAINT "fk_rails_218f14633a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[35m (3.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241216223021) /*application='Src'*/[0m
+  [1m[35m (3.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241216222659),
+(20241216222618),
+(20241216222409); /*application='Src'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-12-18 18:38:55.363192', '2024-12-18 18:38:55.363199') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Update (3.3ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2024-12-18 18:38:55.373208' WHERE "ar_internal_metadata"."key" = 'environment' /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'c71ae0b950b6217c9c0e2da21f8ed59f9cfb30e2', '2024-12-18 18:38:55.381283', '2024-12-18 18:38:55.381288') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='Src'*/[0m
+  [1m[35m (79.8ms)[0m  [1m[35mDROP DATABASE IF EXISTS "src_test" /*application='Src'*/[0m
+  [1m[35m (70.1ms)[0m  [1m[35mCREATE DATABASE "src_test" ENCODING = 'unicode' /*application='Src'*/[0m
+  [1m[35mSQL (41.2ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE /*application='Src'*/[0m
+  [1m[35m (10.0ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "forum_post_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_comments_on_forum_post_id" ON "comments" ("forum_post_id") /*application='Src'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "forum_posts" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE TABLE "forum_posts" ("id" bigserial primary key, "title" character varying, "description" text, "topic" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE INDEX "index_forum_posts_on_user_id" ON "forum_posts" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "library_items" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE TABLE "library_items" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE INDEX "index_library_items_on_user_id" ON "library_items" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying, "password" character varying, "role" character varying, "username" character varying, "first_name" character varying, "last_name" character varying, "bio" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (6.0ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_da45a34768"
+FOREIGN KEY ("forum_post_id")
+  REFERENCES "forum_posts" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.7ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.5ms)[0m  [1m[35mALTER TABLE "forum_posts" ADD CONSTRAINT "fk_rails_c76798dc77"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (5.1ms)[0m  [1m[35mALTER TABLE "library_items" ADD CONSTRAINT "fk_rails_218f14633a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[35m (3.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241216223021) /*application='Src'*/[0m
+  [1m[35m (3.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241216222659),
+(20241216222618),
+(20241216222409); /*application='Src'*/[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-12-18 18:39:22.443949', '2024-12-18 18:39:22.443953') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Update (3.5ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2024-12-18 18:39:22.452144' WHERE "ar_internal_metadata"."key" = 'environment' /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (2.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'c71ae0b950b6217c9c0e2da21f8ed59f9cfb30e2', '2024-12-18 18:39:22.458831', '2024-12-18 18:39:22.458835') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='Src'*/[0m
+  [1m[35m (88.9ms)[0m  [1m[35mDROP DATABASE IF EXISTS "src_test" /*application='Src'*/[0m
+  [1m[35m (105.5ms)[0m  [1m[35mCREATE DATABASE "src_test" ENCODING = 'unicode' /*application='Src'*/[0m
+  [1m[35mSQL (40.2ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE /*application='Src'*/[0m
+  [1m[35m (10.4ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "forum_post_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_comments_on_forum_post_id" ON "comments" ("forum_post_id") /*application='Src'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "forum_posts" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.5ms)[0m  [1m[35mCREATE TABLE "forum_posts" ("id" bigserial primary key, "title" character varying, "description" text, "topic" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE INDEX "index_forum_posts_on_user_id" ON "forum_posts" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "library_items" CASCADE /*application='Src'*/[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE TABLE "library_items" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE INDEX "index_library_items_on_user_id" ON "library_items" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='Src'*/[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying, "password" character varying, "role" character varying, "username" character varying, "first_name" character varying, "last_name" character varying, "bio" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.5ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_da45a34768"
+FOREIGN KEY ("forum_post_id")
+  REFERENCES "forum_posts" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.5ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.1ms)[0m  [1m[35mALTER TABLE "forum_posts" ADD CONSTRAINT "fk_rails_c76798dc77"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (3.9ms)[0m  [1m[35mALTER TABLE "library_items" ADD CONSTRAINT "fk_rails_218f14633a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[35m (3.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241216223021) /*application='Src'*/[0m
+  [1m[35m (3.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241216222659),
+(20241216222618),
+(20241216222409); /*application='Src'*/[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-12-18 20:51:41.227623', '2024-12-18 20:51:41.227632') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Update (4.2ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2024-12-18 20:51:41.238494' WHERE "ar_internal_metadata"."key" = 'environment' /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (2.8ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'c71ae0b950b6217c9c0e2da21f8ed59f9cfb30e2', '2024-12-18 20:51:41.246943', '2024-12-18 20:51:41.246947') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='Src'*/[0m
+  [1m[35m (83.9ms)[0m  [1m[35mDROP DATABASE IF EXISTS "src_test" /*application='Src'*/[0m
+  [1m[35m (99.5ms)[0m  [1m[35mCREATE DATABASE "src_test" ENCODING = 'unicode' /*application='Src'*/[0m
+  [1m[35mSQL (28.2ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Src'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE /*application='Src'*/[0m
+  [1m[35m (8.7ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "forum_post_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_comments_on_forum_post_id" ON "comments" ("forum_post_id") /*application='Src'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "forum_posts" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "forum_posts" ("id" bigserial primary key, "title" character varying, "description" text, "topic" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE INDEX "index_forum_posts_on_user_id" ON "forum_posts" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "library_items" CASCADE /*application='Src'*/[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "library_items" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE INDEX "index_library_items_on_user_id" ON "library_items" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='Src'*/[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying, "password" character varying, "role" character varying, "username" character varying, "first_name" character varying, "last_name" character varying, "bio" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.7ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_da45a34768"
+FOREIGN KEY ("forum_post_id")
+  REFERENCES "forum_posts" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (3.9ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (3.9ms)[0m  [1m[35mALTER TABLE "forum_posts" ADD CONSTRAINT "fk_rails_c76798dc77"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mALTER TABLE "library_items" ADD CONSTRAINT "fk_rails_218f14633a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[35m (3.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241216223021) /*application='Src'*/[0m
+  [1m[35m (3.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241216222659),
+(20241216222618),
+(20241216222409); /*application='Src'*/[0m
+  [1m[35m (5.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (4.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-12-18 20:53:12.166636', '2024-12-18 20:53:12.166645') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Update (3.3ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2024-12-18 20:53:12.177185' WHERE "ar_internal_metadata"."key" = 'environment' /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'c71ae0b950b6217c9c0e2da21f8ed59f9cfb30e2', '2024-12-18 20:53:12.183351', '2024-12-18 20:53:12.183353') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='Src'*/[0m
+  [1m[35m (88.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "src_test" /*application='Src'*/[0m
+  [1m[35m (100.8ms)[0m  [1m[35mCREATE DATABASE "src_test" ENCODING = 'unicode' /*application='Src'*/[0m
+  [1m[35mSQL (39.7ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE /*application='Src'*/[0m
+  [1m[35m (8.9ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "forum_post_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE INDEX "index_comments_on_forum_post_id" ON "comments" ("forum_post_id") /*application='Src'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "forum_posts" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "forum_posts" ("id" bigserial primary key, "title" character varying, "description" text, "topic" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE INDEX "index_forum_posts_on_user_id" ON "forum_posts" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "library_items" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.1ms)[0m  [1m[35mCREATE TABLE "library_items" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE INDEX "index_library_items_on_user_id" ON "library_items" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='Src'*/[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying, "password" character varying, "role" character varying, "username" character varying, "first_name" character varying, "last_name" character varying, "bio" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (6.2ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_da45a34768"
+FOREIGN KEY ("forum_post_id")
+  REFERENCES "forum_posts" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mALTER TABLE "forum_posts" ADD CONSTRAINT "fk_rails_c76798dc77"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.1ms)[0m  [1m[35mALTER TABLE "library_items" ADD CONSTRAINT "fk_rails_218f14633a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[35m (3.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241216223021) /*application='Src'*/[0m
+  [1m[35m (3.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241216222659),
+(20241216222618),
+(20241216222409); /*application='Src'*/[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-12-18 21:14:18.508194', '2024-12-18 21:14:18.508199') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Update (3.2ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2024-12-18 21:14:18.515941' WHERE "ar_internal_metadata"."key" = 'environment' /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'c71ae0b950b6217c9c0e2da21f8ed59f9cfb30e2', '2024-12-18 21:14:18.522044', '2024-12-18 21:14:18.522048') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='Src'*/[0m
+  [1m[35m (89.3ms)[0m  [1m[35mDROP DATABASE IF EXISTS "src_test" /*application='Src'*/[0m
+  [1m[35m (77.3ms)[0m  [1m[35mCREATE DATABASE "src_test" ENCODING = 'unicode' /*application='Src'*/[0m
+  [1m[35mSQL (25.9ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql" SCHEMA pg_catalog /*application='Src'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "comments" CASCADE /*application='Src'*/[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE TABLE "comments" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "forum_post_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE INDEX "index_comments_on_forum_post_id" ON "comments" ("forum_post_id") /*application='Src'*/[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "forum_posts" CASCADE /*application='Src'*/[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "forum_posts" ("id" bigserial primary key, "title" character varying, "description" text, "topic" character varying, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE INDEX "index_forum_posts_on_user_id" ON "forum_posts" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "library_items" CASCADE /*application='Src'*/[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "library_items" ("id" bigserial primary key, "title" character varying, "description" text, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE INDEX "index_library_items_on_user_id" ON "library_items" ("user_id") /*application='Src'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE /*application='Src'*/[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying, "password" character varying, "role" character varying, "username" character varying, "first_name" character varying, "last_name" character varying, "bio" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[35m (4.2ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_da45a34768"
+FOREIGN KEY ("forum_post_id")
+  REFERENCES "forum_posts" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (5.0ms)[0m  [1m[35mALTER TABLE "comments" ADD CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (4.6ms)[0m  [1m[35mALTER TABLE "forum_posts" ADD CONSTRAINT "fk_rails_c76798dc77"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (5.1ms)[0m  [1m[35mALTER TABLE "library_items" ADD CONSTRAINT "fk_rails_218f14633a"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='Src'*/[0m
+  [1m[35m (5.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
+  [1m[35m (3.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241216223021) /*application='Src'*/[0m
+  [1m[35m (3.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241216222659),
+(20241216222618),
+(20241216222409); /*application='Src'*/[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-12-18 21:18:24.478651', '2024-12-18 21:18:24.478661') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Update (3.6ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2024-12-18 21:18:24.490024' WHERE "ar_internal_metadata"."key" = 'environment' /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Src'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'c71ae0b950b6217c9c0e2da21f8ed59f9cfb30e2', '2024-12-18 21:18:24.499175', '2024-12-18 21:18:24.499181') RETURNING "key" /*application='Src'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Src'*/[0m
